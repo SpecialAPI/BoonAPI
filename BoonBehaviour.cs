@@ -6,10 +6,18 @@ using System.Text;
 
 namespace BoonAPI
 {
-    public class BoonBehavior : NonCardTriggerReceiver
+    public class BoonBehaviour : NonCardTriggerReceiver
     {
-        private static List<BoonBehavior> instances;
+        private static List<BoonBehaviour> instances;
         public NewBoon boon;
+		public int instanceNumber;
+		public int InstanceIndex
+        {
+            get
+            {
+				return instanceNumber - 1;
+            }
+        }
 
 		public void Start()
         {
@@ -24,7 +32,7 @@ namespace BoonAPI
 			Instances.Remove(this);
         }
 
-		public static List<BoonBehavior> FindInstancesOfType(BoonData.Type type)
+		public static List<BoonBehaviour> FindInstancesOfType(BoonData.Type type)
         {
 			return Instances.FindAll((x) => x.boon.boon.type == type);
 		}
@@ -39,7 +47,7 @@ namespace BoonAPI
 			return CountInstancesOfType(type) > 0;
         }
 
-        public static List<BoonBehavior> Instances
+        public static List<BoonBehaviour> Instances
         {
             get
             {
@@ -50,8 +58,8 @@ namespace BoonAPI
 
 		public static void DestroyAllInstances()
         {
-			List<BoonBehavior> instance = Instances;
-			foreach (BoonBehavior ins in instance)
+			List<BoonBehaviour> instance = Instances;
+			foreach (BoonBehaviour ins in instance)
             {
 				if(ins != null && ins.gameObject != null)
 				{
@@ -59,13 +67,14 @@ namespace BoonAPI
 				}
             }
 			EnsureInstancesLoaded();
+			Instances.Clear();
         }
 
         public static void EnsureInstancesLoaded()
         {
             if(instances == null)
             {
-                instances = new List<BoonBehavior>();
+                instances = new List<BoonBehaviour>();
             }
 			instances.RemoveAll((x) => x == null || x.gameObject == null);
         }
@@ -79,13 +88,42 @@ namespace BoonAPI
             yield break;
         }
 
-
-		public virtual bool RespondToBattleStart()
+		public virtual bool RespondToPreBoonActivation()
 		{
 			return false;
 		}
 
-		public virtual IEnumerator OnBattleStart()
+		public virtual IEnumerator OnPreBoonActivation()
+		{
+			yield break;
+		}
+
+		public virtual bool RespondToPostBoonActivation()
+		{
+			return false;
+		}
+
+		public virtual IEnumerator OnPostBoonActivation()
+		{
+			yield break;
+		}
+
+		public virtual bool RespondToPreBattleCleanup()
+		{
+			return false;
+		}
+
+		public virtual IEnumerator OnPreBattleCleanup()
+		{
+			yield break;
+		}
+
+		public virtual bool RespondToPostBattleCleanup()
+		{
+			return false;
+		}
+
+		public virtual IEnumerator OnPostBattleCleanup()
 		{
 			yield break;
 		}

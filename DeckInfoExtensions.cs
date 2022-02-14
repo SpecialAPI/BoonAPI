@@ -21,7 +21,7 @@ namespace BoonAPI
                 }
                 return false;
             });
-            List<BoonBehavior> behaviors = BoonBehavior.FindInstancesOfType(type);
+            List<BoonBehaviour> behaviors = BoonBehaviour.FindInstancesOfType(type);
             if(behaviors.Count > 0)
             {
                 UnityEngine.Object.Destroy(behaviors[0].gameObject);
@@ -32,17 +32,17 @@ namespace BoonAPI
         {
             self.boonIds.RemoveAll((x) => x == type);
             self.Boons.RemoveAll((x) => x != null && x.type == type);
-            List<BoonBehavior> behaviors = new List<BoonBehavior>(BoonBehavior.FindInstancesOfType(type));
+            List<BoonBehaviour> behaviors = new List<BoonBehaviour>(BoonBehaviour.FindInstancesOfType(type));
             if (behaviors.Count > 0)
             {
-                foreach (BoonBehavior ins in behaviors)
+                foreach (BoonBehaviour ins in behaviors)
                 {
                     if (ins != null && ins.gameObject != null)
                     {
                         UnityEngine.Object.Destroy(ins.gameObject);
                     }
                 }
-                BoonBehavior.EnsureInstancesLoaded();
+                BoonBehaviour.EnsureInstancesLoaded();
             }
         }
     }

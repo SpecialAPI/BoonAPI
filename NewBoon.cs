@@ -28,9 +28,9 @@ namespace BoonAPI
             boon = data;
             if(boonHandlerType != null)
             {
-                if (!boonHandlerType.IsSubclassOf(typeof(BoonBehavior)))
+                if (!boonHandlerType.IsSubclassOf(typeof(BoonBehaviour)))
                 {
-                    boonHandlerType = typeof(BoonBehavior);
+                    boonHandlerType = typeof(BoonBehaviour);
                 }
                 this.boonHandlerType = boonHandlerType;
             }

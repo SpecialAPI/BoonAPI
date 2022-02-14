@@ -11,8 +11,22 @@ namespace BoonAPI.Patches
     {
 		public static IEnumerator Postfix(IEnumerator result)
 		{
+			foreach (BoonBehaviour bb in BoonBehaviour.Instances)
+			{
+				if (bb != null && bb.RespondToPreBattleCleanup())
+				{
+					yield return bb.OnPreBattleCleanup();
+				}
+			}
 			yield return result;
-			BoonBehavior.DestroyAllInstances();
+			foreach (BoonBehaviour bb in BoonBehaviour.Instances)
+			{
+				if (bb != null && bb.RespondToPostBattleCleanup())
+				{
+					yield return bb.OnPostBattleCleanup();
+				}
+			}
+			BoonBehaviour.DestroyAllInstances();
 			yield break;
 		}
 	}
